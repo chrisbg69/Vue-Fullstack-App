@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Meetup = require('./meetups');
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const config = require('../config/dev')
 
 const userSchema = new Schema({
