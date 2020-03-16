@@ -20,4 +20,10 @@
 </script>
 
 <style scoped>
+.title, .subtitle  {
+  text-align: center;
+  
+}
+
+
 </style>
