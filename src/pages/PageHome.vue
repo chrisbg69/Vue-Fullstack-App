@@ -110,16 +110,7 @@
           <h1 class="title">Categories</h1>
           <div class="columns cover is-multiline is-mobile">
             <!-- Category -->
-            <div v-for="category in categories" :key="category._id" class="column is-one-quarter" :style="{'min-height': '160px'}">
-              <a href="#">
-                <span class="is-primary is-top is-medium tooltip">
-                  <figure class="image is-4by3 imageFade">
-                    <img class="is-rounded" :src="category.image" alt="">
-                  </figure>
-                  <div class="subtitle m-t-xs bold">{{category.name}}</div>
-                </span>
-              </a>
-            </div>              
+             <CategoryItem v-for="category in categories" :key="category._id" :category="category"/>      
              
           </div>
         </div>
@@ -130,7 +121,11 @@
 
 <script>
   import axios from 'axios'
+  import CategoryItem from '../components/CategoryItem'
   export default {
+    components: {
+      CategoryItem
+    },
     data () {
       return {
         categories: []
@@ -147,7 +142,5 @@
 </script>
 
 <style scoped>
-  .is-rounded {
-    border-radius: 10px !important;
-  }
+  
 </style>
