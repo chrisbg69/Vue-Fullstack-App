@@ -2,7 +2,7 @@
   <div class="notFoundContainer">
     <div class="m-b-xxl">
       <h1 class="title">{{title}}</h1>
-      <router-link :to="{name: navigateToPage}" class="button is-primary">{{navigateToText}}</router-link>
+      <router-link :to="{name: navigateToPage}" class="button is-primary is-focused">{{navigateToText}}</router-link>
     </div>
     <h2 class="subtitle">
       {{status}}
