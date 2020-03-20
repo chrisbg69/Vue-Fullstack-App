@@ -21,10 +21,11 @@ export default new Vuex.Store({
     // Very good spot to fetch a data. Action call usualy should resolve into data.
     actions: {
         fetchMeetups ({state, commit}) {
+            commit('setItems', {resource: 'meetups', items: []});
             axios.get('/api/v1/meetups')
         .then(res => {
           const meetups = res.data;
-          commit('setMeetups', meetups);
+          commit('setItems', {resource: 'meetups', items: meetups});
           return state.meetups;
         })
         },
@@ -32,15 +33,16 @@ export default new Vuex.Store({
             axios.get('/api/v1/categories')
         .then(res => {          
           const categories = res.data;
-          commit('setCategories', categories);
+          commit('setItems', {resource: 'categories', items: categories});
           return state.categories;
         });
         },
         fetchMeetupById ({state, commit}, meetupId) {
+         commit('setItem', {resource: 'meetup', items: {}});
          axios.get(`/api/v1/meetups/${meetupId}`)
          .then(res => {
             const meetup = res.data;
-            commit('setMeetup', meetup);
+            commit('setItem', {resource: 'meetup', items: meetup});
             return state.meetup;
          });
         },
@@ -48,24 +50,18 @@ export default new Vuex.Store({
          axios.get(`/api/v1/threads?meetupId=${meetupId}`)
          .then(res => {
             const threads = res.data;
-            commit('setThreads', threads);
+            commit('setItems', {resource: 'threads', items: threads});
             return state.threads;
          });
         }
     },
     // Simple functions to mutate a state
     mutations: {
-        setMeetups (state, meetups) {
-            state.meetups = meetups;
+        setItems (state, {resource, items}) {
+            state[resource] = items;
         },
-        setMeetup (state, meetup) {
-            state.meetup = meetup;
-        },
-        setCategories (state, categories) {
-            state.categories = categories;
-        },
-        setThreads (state, threads) {
-            state.threads = threads;
+        setItem (state, {resource, item}) {
+            state[resource] = item;
         }
     }
 });

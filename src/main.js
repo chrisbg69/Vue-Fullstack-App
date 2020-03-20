@@ -21,8 +21,8 @@ Vue.filter('capitalize', function (value) {
 });
 
 Vue.filter('formatDate', function (value, formatType = 'LL') {
-  if(!value) return ''
-  return moment(value).format(formatType)
+  if(!value) return '';
+  return moment(value).format(formatType);
 })
 
 new Vue({
