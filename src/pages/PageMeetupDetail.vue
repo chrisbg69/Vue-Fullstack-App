@@ -144,14 +144,13 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import axios from 'axios'
-import { mapActions, mapState } from 'vuex'
+
+  import { mapActions, mapState } from 'vuex'
 export default {
     computed: {
       ...mapState ({
-         meetup: state => state.meetup,
-         threads: state => state.threads
+         meetup: state => state.meetups,
+        threads: state => state.threads
 
        }),
              meetupCreator () {
