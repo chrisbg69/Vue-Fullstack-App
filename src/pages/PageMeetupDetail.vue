@@ -149,11 +149,11 @@
 export default {
     computed: {
       ...mapState ({
-         meetup: state => state.meetups,
-        threads: state => state.threads
+         meetup: state => state.meetups.item,
+        threads: state => state.threads.items
 
        }),
-             meetupCreator () {
+        meetupCreator () {
         return this.meetup.meetupCreator || {}
       },
        
@@ -165,7 +165,8 @@ export default {
       
     },
     methods: {
-      ...mapActions(['fetchMeetupById', 'fetchThreads'])
+      ...mapActions('meetups', ['fetchMeetupById']),
+      ...mapActions('threads', ['fetchThreads'])
     }
     
 }

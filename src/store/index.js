@@ -1,25 +1,34 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import axios from 'axios';
+
+
+import meetups from './modules/meetups';
+import threads from './modules/threads';
+import categories from './modules/categories';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+    modules: {
+        meetups,
+        categories,
+        threads
+    },
     // In state we are keepeng our data we are sharing with our components
-    state: {
+    /* state: {
         meetups: [],
         categories: [],
         threads: [],
         meetup: {}
-    },
+    }, */
     // Getters are liked computed properties. Simple functions to get a state
-    getters: {
+    /* getters: {
         
-    },
+    }, */
     // Actions are like methods in vue component. They should not mutate the state
     // Very good spot to fetch a data. Action call usualy should resolve into data.
-    actions: {
+    /* actions: {
         fetchMeetups ({state, commit}) {
             commit('setItems', {resource: 'meetups', items: []});
             axios.get('/api/v1/meetups')
@@ -54,14 +63,14 @@ export default new Vuex.Store({
             return state.threads;
          });
         }
-    },
+    }, */
     // Simple functions to mutate a state
     mutations: {
         setItems (state, {resource, items}) {
-            state[resource] = items;
+            state[resource].items = items;
         },
         setItem (state, {resource, item}) {
-            state[resource] = item;
+            state[resource].item = item;
         }
     }
 });
