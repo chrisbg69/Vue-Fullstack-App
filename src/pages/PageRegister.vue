@@ -55,8 +55,7 @@
                          type="text"
                          placeholder="Avatar"
                          autocomplete="">
-                  <div v-if="$v.form.avatar.$error" class="form-error">
-                    <span v-if="!$v.form.avatar.required" class="help is-danger">Avatar is required</span>
+                  <div v-if="$v.form.avatar.$error" class="form-error">                    
                     <span v-if="!$v.form.avatar.url" class="help is-danger">Url format is not valid</span>                    
                   </div>        
                 </div>
@@ -131,8 +130,7 @@
             required,
             email
           },
-          avatar: {
-            required,
+          avatar: {            
             url
           },
           password: {
