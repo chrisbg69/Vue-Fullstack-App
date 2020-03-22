@@ -2,7 +2,7 @@
   <nav class="navbar is-spaced" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <router-link :to="'/'" class="navbar-item" href="https://bulma.io">
-        <h1 class="title is-4">VueMeetuper</h1>
+        <h1 class="title is-4">VueFullstackApp</h1>
       </router-link>
       <a
         role="button"
