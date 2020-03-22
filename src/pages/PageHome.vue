@@ -50,8 +50,8 @@
     },
     created ()  {
       Promise.all([this.fetchMeetups(), this.fetchCategories()])
-        // eslint-disable-next-line no-unused-vars
-        .then((results) => this.pageLoader_resolveData())
+        
+        .then(() => this.pageLoader_resolveData())
         .catch((err) => {
           console.error(err)
           this.pageLoader_resolveData()
