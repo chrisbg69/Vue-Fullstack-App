@@ -1,4 +1,16 @@
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
+import axiosInstance from '@/services/axios';
+import { rejectError } from '@/helpers';
+
+function checkTokenValidity (token) {
+    if (token) {
+       const decodedToken =jwt.decode(token)
+       
+       return decodedToken && (decodedToken.exp * 1000) > new Date().getTime()
+    }
+    return false
+}
 
 
 export default {
@@ -22,36 +34,38 @@ export default {
                     const user = res.data;
                     localStorage.setItem('meetupper-jwt', user.token)
                     commit('setAuthUser', user);
-                });
+                })
+                .catch(err => rejectError(err));
         },
         registerUser (context, userData) {
-            return axios.post('/api/v1/users/register', userData);
+            return axios.post('/api/v1/users/register', userData)
+            .catch(err => rejectError(err))
         },
         logout ({commit}) {
-            return axios.post('/api/v1/users/logout')
-                .then(() => {
-                    commit('setAuthUser', null);
-                    return true;
+            
+               
+                return new Promise((resolve) => {
+                    localStorage.removeItem('meetupper-jwt')
+                    commit('setAuthUser', null)
+                    resolve(true)
                 })
-                .catch(err => {
-                    return err;
-                });
+
         },
         getAuthUser ({commit, getters}) {
             const authUser = getters['authUser']
             const token = localStorage.getItem('meetupper-jwt');
+            const isTokenValid = checkTokenValidity(token);
 
-            if(authUser) { return Promise.resolve(authUser) }
+            if(authUser && isTokenValid) { return Promise.resolve(authUser) }
 
             const config = {
                 headers: {
-                    'Cache-Control': 'no-cache',
-                    'authorization': `Bearer ${token}`
+                    'Cache-Control': 'no-cache'                   
                     
                 }
             }
 
-            return axios.get('/api/v1/users/me', config)
+            return axiosInstance.get('/api/v1/users/me', config)
                 .then((res) => {
                     const user = res.data;
                     localStorage.setItem('meetupper-jwt', user.token) 

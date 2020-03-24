@@ -31,7 +31,8 @@ exports.register = function (req, res) {
   if (!registerData.email) {
     return res.status(422).json({
       errors: {
-        email: 'is required'
+        email: 'is required',
+        message: 'Email is required!'
       }
     });
   }
@@ -39,7 +40,8 @@ exports.register = function (req, res) {
   if (!registerData.password) {
     return res.status(422).json({
       errors: {
-        password: 'is required'
+        password: 'is required',
+        message: 'Password is required!'
       }
     });
   }
@@ -47,7 +49,8 @@ exports.register = function (req, res) {
   if (registerData.password !== registerData.passwordConfirmation) {
     return res.status(422).json({
       errors: {
-        password: 'Passwords are not the same!'
+        password: 'Passwords are not the same!',
+        message: 'Passwords are not the same!'
       }
     });
   }
@@ -69,7 +72,8 @@ exports.login = function (req, res, next) {
   if (!email) {
     return res.status(422).json({
       errors: {
-        email: 'is required'
+        email: 'is required',
+        message: 'Email is required!'
       }
     });
   }
@@ -77,7 +81,8 @@ exports.login = function (req, res, next) {
   if (!password) {
     return res.status(422).json({
       errors: {
-        password: 'is required'
+        password: 'is required',
+        message: 'Password is required!'
       }
     });
   }
@@ -97,7 +102,7 @@ exports.login = function (req, res, next) {
       return res.json(passportUser.toAuthJSON())
     } else {
       return res.status(422).send({errors: {
-        'authentication': 'Ooops, something went wrong!'
+        message: 'Incorrect email or password!'
       }});
     }
 

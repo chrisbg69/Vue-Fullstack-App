@@ -81,13 +81,15 @@ import { required, email } from 'vuelidate/lib/validators'
         }
       },
       methods: {
-          login () {
-              this.$v.form.$touch()              
-              this.$store.dispatch('auth/loginWithEmailAndPassword', this.form)
-                .then(() => this.$router.push('/'))
-                .catch((err) =>console.log(err))
-          }
+      login () {
+        this.$v.form.$touch()
+        this.$store.dispatch('auth/loginWithEmailAndPassword', this.form)
+          .then(() => this.$router.push('/'))
+          .catch((errorMessage) => {
+            this.$toasted.error(errorMessage, {duration: 5000, position: "top-center"})
+          })
       }
+    }
   }
 </script>
 
