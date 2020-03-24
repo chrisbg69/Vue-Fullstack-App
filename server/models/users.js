@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Meetup = require('./meetups');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const config = require('../config/dev');
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+const config = require('../config/dev')
 
 const userSchema = new Schema({
   avatar: String,
@@ -14,16 +14,17 @@ const userSchema = new Schema({
            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/]},
   name: { type: String,
           required: true,
-          min: [6, 'Too short, min is 6 characters']},
+          minlength: [6, 'Too short, min is 6 characters']},
   username: { type: String,
           required: true,
-          min: [6, 'Too short, min is 6 characters']},
+          minlength: [6, 'Too short, min is 6 characters']},
   password: {
     type: String,
-    min: [4, 'Too short, min is 4 characters'],
-    max: [32, 'Too long, max is 32 characters'],
+    minlength: [4, 'Too short, min is 4 characters'],
+    maxlength: [32, 'Too long, max is 32 characters'],
     required: 'Password is required'
   },
+  active: { type: Boolean, default: false },
   info: String,
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
@@ -52,27 +53,27 @@ userSchema.methods.comparePassword = function(candidatePassword, callback){
 
       callback(null, isMatch);
    });
-};
+}
+
 
 userSchema.methods.generateJWT = function () {
-   return jwt.sign ({
-      email: this.email,
-      id: this._id
-   }, config.JWT_SECRET, {expiresIn: '1h'});
-};
+  return jwt.sign({
+    email: this.email,
+    id: this._id
+  }, config.JWT_SECRET, {expiresIn: '1h'})
+}
 
 userSchema.methods.toAuthJSON = function () {
-   return {
-      _id: this.id,
-      avatar: this.avatar,
-      name: this.name,
-      username: this.username,
-      info: this.info,
-      email: this.email,
-      joinedMeetups: this.joinedMeetups,
-      token: this.generateJWT()
-
-   };
-};
+  return {
+    _id: this._id,
+    avatar: this.avatar,
+    name: this.name,
+    username: this.username,
+    info: this.info,
+    email: this.email,
+    joinedMeetups: this.joinedMeetups,
+    token: this.generateJWT()
+  };
+}
 
 module.exports = mongoose.model('User', userSchema );

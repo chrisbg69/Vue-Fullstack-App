@@ -20,6 +20,7 @@ export default {
             return axios.post('/api/v1/users/login', userData)
                 .then(res => {
                     const user = res.data;
+                    localStorage.setItem('meetupper-jwt', user.token)
                     commit('setAuthUser', user);
                 });
         },
@@ -38,17 +39,20 @@ export default {
         },
         getAuthUser ({commit, getters}) {
             const authUser = getters['authUser']
+            
             if(authUser) { return Promise.resolve(authUser) }
 
             const config = {
                 headers: {
                     'Cache-Control': 'no-cache'
+                    
                 }
             }
 
             return axios.get('/api/v1/users/me', config)
                 .then((res) => {
                     const user = res.data;
+                     
                     commit('setAuthUser', user);
                     commit('setAuthState', true);
                     return user;

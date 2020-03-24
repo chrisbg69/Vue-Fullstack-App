@@ -4,15 +4,14 @@ const bodyParser = require('body-parser');
 const config = require('./config/dev');
 const session = require('express-session');
 const passport = require('passport');
+/* const MongoDBStore = require('connect-mongodb-session')(session);
 
-//Only for session authentication
-//const MongoDBStore = require('connect-mongodb-session')(session);
-/* const store = new MongoDBStore({
+const store = new MongoDBStore({
   uri: config.DB_URI,
   collection: 'meetuperSessions'
-}); */
+});
 
-// store.on('error', (error) => console.log(error));
+store.on('error', (error) => console.log(error)); */
 
 require("./models/meetups");
 require("./models/users");
@@ -22,13 +21,11 @@ require("./models/categories");
 
 require("./services/passport");
 
-
-//Only for session authentication
-/* const meetupsRoutes = require('./routes/meetups'),
+const meetupsRoutes = require('./routes/meetups'),
       usersRoutes = require('./routes/users'),
       threadsRoutes = require('./routes/threads'),
       postsRoutes = require('./routes/posts'),
-      categoriesRoutes = require('./routes/categories'); */
+      categoriesRoutes = require('./routes/categories');
 
 mongoose.connect(config.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('DB Connected!'))
@@ -36,9 +33,8 @@ mongoose.connect(config.DB_URI, { useNewUrlParser: true, useUnifiedTopology: tru
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json()); 
 
-//Only for session authentication
 /* app.use(session({ secret: config.SESSION_SECRET, 
                   cookie: { maxAge: 3600000 },
                   resave: false,
@@ -47,13 +43,13 @@ app.use(bodyParser.json());
                 }));
 
 app.use(passport.initialize());
-app.use(passport.session());                
+app.use(passport.session());           */      
 
 app.use('/api/v1/meetups', meetupsRoutes);
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/posts', postsRoutes);
 app.use('/api/v1/threads', threadsRoutes);
-app.use('/api/v1/categories', categoriesRoutes); */
+app.use('/api/v1/categories', categoriesRoutes);
 
 const PORT = process.env.PORT || 3001;
 
