@@ -87,7 +87,7 @@
             
               <button v-if="!isAuthenticated"
                       :disabled="true"
-                      class="button is-warning">You need authenticate in order to join</button>
+                      class="button is-warning">You need to authenticate in order to join</button>
             </div>
             <!-- Thread List START -->
             <div class="content is-medium">
