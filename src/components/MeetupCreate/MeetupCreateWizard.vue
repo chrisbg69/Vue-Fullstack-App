@@ -4,20 +4,21 @@
       {{currentStep}} of {{allStepsCount}}
     </div>
     <!-- Form Steps -->
-    <MeetupLocation v-if="currentStep === 1"  @stepUpdated="mergeStepData" />
-    <MeetupDetail v-if="currentStep === 2" @stepUpdated="mergeStepData" />
-    <MeetupDescription v-if="currentStep  === 3" @stepUpdated="mergeStepData" />
-    <MeetupConfirmation v-if="currentStep === 4" />
-
+    <keep-alive>
+      <component  :is="currentComponent"
+                  @stepUpdated="mergeStepData" 
+                  ref="currentComponent" 
+                  :meetupToCreate="form" />    
+    </keep-alive>
     <progress class="progress" :value="currentProgress" max="100">{{currentProgress}}100%</progress>
     <div class="controll-btns m-b-md">
       <button v-if="currentStep !== 1" @click="moveToPreviousStep" class="button is-primary m-r-sm">Back</button>
-      <button v-if="currentStep !== allStepsCount" @click="moveToNextStep" class="button is-primary">Next</button>
+      <button v-if="currentStep !== allStepsCount" @click="moveToNextStep" :disabled="!canProceed" class="button is-primary">Next</button>
       <!-- Confirm Data -->
-      <button v-else class="button is-primary">Confirm</button>
-    </div>
-    <!-- Just To See Data in the Form -->
-    <pre><code>{{form}}</code></pre>
+      <button v-else
+              @click="emitMeetupConfirm"
+              class="button is-primary">Confirm</button>
+    </div>    
   </div>
 </template>
 
@@ -36,8 +37,9 @@
     data () {
         
       return {
-          currentStep: 1,
-          allStepsCount: 4,
+          currentStep: 1,          
+          canProceed: false,
+          formSteps: ['MeetupLocation', 'MeetupDetail', 'MeetupDescription', 'MeetupConfirmation'],
         form: {
           location: null,
           title: null,
@@ -52,19 +54,35 @@
       }
     },
     computed: {
+        allStepsCount () {
+          return this.formSteps.length
+        },
         currentProgress () {
             return (100 / this.allStepsCount) * this.currentStep
+        },
+        currentComponent () {
+          return this.formSteps[this.currentStep - 1]
         }
     },
     methods: {
-        mergeStepData (stepData) {
-            this.form = {...this.form, ...stepData}
+        mergeStepData (step) {
+            this.form = {...this.form, ...step.data}
+            this.canProceed = step.isValid
         },
         moveToNextStep () {
             this.currentStep++
+            this.$nextTick(() => {
+              this.canProceed = !this.$refs['currentComponent'].$v.$invalid
+            })
+            
+            
         },
         moveToPreviousStep () {
             this.currentStep--
+            this.canProceed = true
+        },
+        emitMeetupConfirm () {
+          this.$emit('meetupConfirmed', this.form)
         }
     }
   }
