@@ -6,8 +6,7 @@
           <h2 class="subtitle">            
             {{meetup.startDate | formatDate}}
           </h2>
-          <h1 class="title">
-            <!-- TODO: title -->
+          <h1 class="title">            
             {{meetup.title}}
           </h1>
           <article class="media v-center">
@@ -19,17 +18,15 @@
             </figure>
             <div class="media-content">
               <div class="content">
-                <p>
-                  <!-- OPTIONAL: meetupCreator name -->
+                <p>                  
                   Created by <strong>{{meetupCreator.name}}</strong>
                 </p>
               </div>
             </div>
           </article>
         </div>
-        <div class="is-pulled-right">
-          <!-- We will handle this later (: -->
-          <button class="button is-danger">Leave Group</button>
+        <div class="is-pulled-right">          
+          <button v-if="isMember" class="button is-danger">Leave Meetup</button>
         </div>
       </div>
     </section>
@@ -40,23 +37,19 @@
             <aside class="is-medium menu">
               <div class="meetup-side-box">
                 <div class="meetup-side-box-date m-b-sm">
-                  <p><b>Date</b></p>
-                  <!-- TODO: meetup startDate -->
+                  <p><b>Date</b></p>                  
                   <p>{{meetup.startDate | formatDate}}</p>
                 </div>
                 <div class="meetup-side-box-date m-b-sm">
-                  <p><b>Time</b></p>
-                  <!-- TODO: meetup timeFrom - timeTo -->
+                  <p><b>Time</b></p>                  
                   <span>{{meetup.timeFrom}}</span> - <span>{{meetup.timeTo}}</span>
                 </div>
                 <div class="meetup-side-box-place m-b-sm">
-                  <p><b>How to find us</b></p>
-                  <!-- TODO: meetup location -->
+                  <p><b>How to find us</b></p>                  
                   <p>{{meetup.location}}</p>
                 </div>
                 <div class="meetup-side-box-more-info">
-                  <p><b>Additional Info</b></p>
-                  <!-- TODO: meetup shortInfo -->
+                  <p><b>Additional Info</b></p>                  
                   <p>{{meetup.shortInfo}}</p>
                 </div>
               </div>
@@ -87,13 +80,14 @@
           <div class="column is-7 is-offset-1">
             <div class="content is-medium">
               <h3 class="title is-3">About the Meetup</h3>
-              <!-- TODO: meetup description -->
+              
               <p>{{meetup.description}}</p>
-              <!-- Join Meetup, We will handle it later (: -->
-              <button class="button is-primary">Join In</button>
-              <!-- Not logged In Case, handle it later (: -->
-              <!-- <button :disabled="true"
-                      class="button is-warning">You need authenticate in order to join</button> -->
+              
+              <button v-if="canJoin" class="button is-primary">Join In</button>
+            
+              <button v-if="!isAuthenticated"
+                      :disabled="true"
+                      class="button is-warning">You need authenticate in order to join</button>
             </div>
             <!-- Thread List START -->
             <div class="content is-medium">
@@ -156,7 +150,18 @@ export default {
         meetupCreator () {
         return this.meetup.meetupCreator || {}
       },
-       
+        isAuthenticated () {
+          return this.$store.getters['auth/isAuthenticated']
+        },
+        isMeetupOwner () {
+          return this.$store.getters['auth/isMeetupOwner'](this.meetupCreator._id)
+        },
+        isMember () {
+          return this.$store.getters['auth/isMember'](this.meetup._id)
+        },
+        canJoin () {
+          return !this.isMeetupOwner && this.isAuthenticated && !this.isMember
+        }
     },
     created () {
        const meetupId = this.$route.params.id
