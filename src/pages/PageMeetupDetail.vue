@@ -61,7 +61,7 @@
                 Threads
               </p>
               <ul>
-                <li v-for="thread in threads" :key="thread._id">{{thread.title}}</li>
+                <li v-for="thread in orderedThreads" :key="thread._id">{{thread.title}}</li>
               </ul>
               <p class="menu-label">
                 Who is Going
@@ -88,11 +88,15 @@
               <button v-if="!isAuthenticated"
                       :disabled="true"
                       class="button is-warning">You need to authenticate in order to join</button>
+              <ThreadCreateModal  v-if="isMember || isMeetupOwner"
+                                  @threadSubmited="createThread"
+                                  :btnTitle="`Welcome ${authUser.username}, Start a new thread`"
+                                  :title="'Create thread'" />
             </div>
             <!-- Thread List START -->
             <div class="content is-medium">
               <h3 class="title is-3">Threads</h3>
-              <div v-for="thread in threads" :key="thread._id" class="box">
+              <div v-for="thread in orderedThreads" :key="thread._id" class="box">
                 <!-- Thread title -->
                 <h4 id="const" class="title is-3">{{thread.title}}</h4>
                 <!-- Create new post, handle later -->
@@ -138,13 +142,17 @@
 </template>
 
 <script>
-
   import { mapActions, mapState } from 'vuex'
+  import ThreadCreateModal from '@/components/ThreadCreateModal'
 export default {
+    components: {
+      ThreadCreateModal
+    },
     computed: {
       ...mapState ({
-         meetup: state => state.meetups.item,
-        threads: state => state.threads.items
+        meetup: state => state.meetups.item,
+        threads: state => state.threads.items,
+        authUser: state => state.auth.user
 
        }),
         meetupCreator () {
@@ -161,6 +169,12 @@ export default {
         },
         canJoin () {
           return !this.isMeetupOwner && this.isAuthenticated && !this.isMember
+        },
+        orderedThreads () {
+          const copyOfThreads = [...this.threads]
+          return copyOfThreads.sort((thread, nextThread) => {
+            return new Date(nextThread.createdAt) - new Date(thread.createdAt)
+          })
         }
     },
     created () {
@@ -171,12 +185,20 @@ export default {
     },
     methods: {
       ...mapActions('meetups', ['fetchMeetupById']),
-      ...mapActions('threads', ['fetchThreads']),
+      ...mapActions('threads', ['fetchThreads', 'postThread']),
       joinMeetup () {
         this.$store.dispatch('meetups/joinMeetup', this.meetup._id)
       },
       leaveMeetup () {
         this.$store.dispatch('meetups/leaveMeetup', this.meetup._id)
+      },
+      createThread ({title, done}) {
+        this.postThread({title, meetupId: this.meetup._id})
+          .then(() => {
+            this.$toasted.success('Thread Succesfuly Created!', {duration: 3000, position: "top-center"})
+            done()
+        })
+       
       }
     }
     
