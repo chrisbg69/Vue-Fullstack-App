@@ -148,8 +148,8 @@
         this.$v.form.$touch()
         this.$store.dispatch('auth/registerUser', this.form)
           .then(() => this.$router.push('/login'))          
-          .catch((errMessage) => {
-            this.$toasted.error(errMessage, {duration: 5000, position: "top-center"})
+          .catch((errorMessage) => {
+            this.$toasted.error(errorMessage, {duration: 5000, position: "top-center"})
           })
       }
     }

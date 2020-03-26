@@ -26,7 +26,7 @@
           </article>
         </div>
         <div class="is-pulled-right">          
-          <button v-if="isMember" class="button is-danger">Leave Meetup</button>
+          <button v-if="isMember" @click="leaveMeetup" class="button is-danger">Leave Meetup</button>
         </div>
       </div>
     </section>
@@ -83,7 +83,7 @@
               
               <p>{{meetup.description}}</p>
               
-              <button v-if="canJoin" class="button is-primary">Join In</button>
+              <button v-if="canJoin" @click="joinMeetup" class="button is-primary">Join In</button>
             
               <button v-if="!isAuthenticated"
                       :disabled="true"
@@ -171,7 +171,13 @@ export default {
     },
     methods: {
       ...mapActions('meetups', ['fetchMeetupById']),
-      ...mapActions('threads', ['fetchThreads'])
+      ...mapActions('threads', ['fetchThreads']),
+      joinMeetup () {
+        this.$store.dispatch('meetups/joinMeetup', this.meetup._id)
+      },
+      leaveMeetup () {
+        this.$store.dispatch('meetups/leaveMeetup', this.meetup._id)
+      }
     }
     
 }

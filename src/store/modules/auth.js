@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import axiosInstance from '@/services/axios';
@@ -86,7 +87,18 @@ export default {
                     return err;                    
                 });
               
-        }
+        },
+        addMeetupToAuthUser ({commit, state}, meetupId) {
+            const userMeetups = [...state.user['joinedMeetups'], meetupId]
+            commit ('setMeetupsToAuthUser', userMeetups) 
+        },
+        removeMeetupFromAuthUser ({commit, state}, meetupId) {
+            const userMeetupsIds = [...state.user['joinedMeetups']]
+            const index = userMeetupsIds.findIndex(userMeetupId => userMeetupId === meetupId)
+      
+            userMeetupsIds.splice(index, 1)
+            commit('setMeetupsToAuthUser', userMeetupsIds)
+        },
     },
     mutations: {
         setAuthUser (state, user) {
@@ -94,6 +106,9 @@ export default {
         },
         setAuthState (state, authState) {
             return state.isAuthResolved = authState;
-        }
+        },
+        setMeetupsToAuthUser (state, meetups) {
+            return Vue.set(state.user, 'joinedMeetups', meetups)
+          }
     }
 };
