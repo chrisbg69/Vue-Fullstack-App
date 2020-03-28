@@ -33,9 +33,8 @@ export default {
                     commit('addItemToArray', {item: createdThread, index, resource: 'threads'}, {root: true});
                     return createdThread;
                 })
-        },
-        // eslint-disable-next-line no-unused-vars
-        sendPost ({commit, state, dispatch}, {text, threadId}) {
+        },        
+        sendPost ({dispatch}, {text, threadId}) {
             const post = {text, thread: threadId}
             
             return axiosInstance.post('/api/v1/posts', post)

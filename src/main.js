@@ -4,12 +4,14 @@ import router from './router';
 import store from './store';
 import vuelidate from 'vuelidate';
 import Toasted from 'vue-toasted';
+import AppSocket from './plugins/socket';
 
 import AppDropdown from './components/shared/AppDropdown';
 import AppHero from './components/shared/AppHero';
 import AppSpinner from './components/shared/AppSpinner';
 
 import moment from 'moment';
+
 
 Vue.config.productionTip = false;
 
@@ -19,6 +21,8 @@ Vue.component('AppSpinner', AppSpinner);
 
 Vue.use(vuelidate);
 Vue.use(Toasted);
+Vue.use(AppSocket, {connection: 'http://localhost:3001'});
+
 
 Vue.filter('capitalize', function (value) {
   if(value && typeof value === 'string') {
@@ -30,11 +34,12 @@ Vue.filter('capitalize', function (value) {
 Vue.filter('formatDate', function (value, formatType = 'LL') {
   if(!value) return '';
   return moment(value).format(formatType);
-})
+});
 
-new Vue({
+
+new Vue({  
   router,
   store,
-  vuelidate,
+  vuelidate,  
   render: h => h(App),
 }).$mount('#app');
