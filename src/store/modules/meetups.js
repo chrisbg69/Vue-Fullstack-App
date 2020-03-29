@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
-import axiosInstance from '@/services/axios'
+import axiosInstance from '@/services/axios';
 
 
 export default {
