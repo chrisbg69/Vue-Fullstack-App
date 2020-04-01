@@ -11,7 +11,7 @@
                        @keyup.enter="fetchMeetups" 
                        type="text" 
                        class="input" 
-                       placeholder="New York">
+                       placeholder="Search Meetups">
               </div>
               <div v-if="searchedLocation && meetups && meetups.length > 0" class="level-item">
                 <span>Meetups in {{meetups[0].location}}</span>

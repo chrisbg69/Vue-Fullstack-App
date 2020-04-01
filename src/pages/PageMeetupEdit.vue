@@ -29,8 +29,8 @@
         </div>
         <div class="is-pulled-right">
           <!-- Update Button -->
-          <button
-            class="button is-success is-large">Update</button>
+          <button @click="updateMeetupHandler"
+                  class="button is-success is-large">Update</button>
         </div>
       </div>
     </section>
@@ -59,6 +59,19 @@
                                     :minute-interval="10"></vue-timepicker>
                   </div>
                   <!-- TIMES END -->
+                </div>
+                 <div class="meetup-side-box-place m-b-sm">
+                  <p><b>Choose Category</b></p>
+                  <div class="field">
+                    <div class="select">
+                      <!-- TODO: Get Here Categories -->
+                      <select v-model="meetup.category">
+                        <option v-for="category of categories"
+                                :value="category"
+                                :key="category.id">{{category.name}}</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <div class="meetup-side-box-place m-b-sm">
                   <p><b>How to find us</b></p>
@@ -125,6 +138,7 @@ export default {
     },
     created () {
         this.fetchMeetupByIdHandler()
+        this.fetchCategories()
     },
     computed: {
         meetup () {
@@ -137,6 +151,9 @@ export default {
             }
             return {}
         },
+        categories () {
+        return this.$store.state.categories.items
+        },
         meetupCreator () {
         return this.meetup.meetupCreator || {}
         },
@@ -145,8 +162,8 @@ export default {
       }
     },
     methods: {
-        ...mapActions('meetups', ['fetchMeetupById']),
-
+        ...mapActions('meetups', ['fetchMeetupById', 'updateMeetup']),
+        ...mapActions('categories', ['fetchCategories']),
         fetchMeetupByIdHandler () {
             this.fetchMeetupById(this.meetupId)
                 .then(meetup => {
@@ -155,6 +172,13 @@ export default {
                     }
                 })
                 .catch(err => console.log(err)) 
+        },
+        updateMeetupHandler () {
+        this.updateMeetup(this.meetup)
+          .then(() => {
+            this.$toasted.success('Meetup Succesfuly Updated!', {duration: 3000, position: "top-center"})
+          })
+          .catch(err => console.log(err))
         },
         parseTime (time) {
             const [HH, mm] = time.split(':')

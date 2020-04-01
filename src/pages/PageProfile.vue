@@ -4,40 +4,34 @@
             <div class="section profile-heading">
                 <div class="columns is-mobile is-multiline">
                 <div class="column is-2">
-                    <figure class="image  header-icon user-profile-image">
-                    <!-- TODO: Get user avatar here -->
+                    <figure class="image  header-icon user-profile-image">                    
                     <img class="is-rounded" :src="user.avatar"/>
                     </figure>
                 </div>
                 <div class="column is-4-tablet is-10-mobile name">
-                    <p>
-                    <!-- TODO: Display user name here -->
+                    <p>                    
                     <span class="title is-bold">{{user.name}}</span>
                     <br/>
                     <!-- Here will be user update functionality -->
                     <UserUpdateModal :authUser="user" @userSubmitted="updateUser" />
                     <br/>
-                    </p>
-                    <!-- TODO: User Info Here if any -->
+                    </p>                    
                     <p class="tagline">
                     {{user.info}}
                     </p>
-                </div>
-                <!-- TODO: Set Active Tab to 'meetups' and class to 'isActive' -->
+                </div>                
                     <div @click="activeTab = 'meetups'" 
                     :class="{isActive: activeTab === 'meetups'}"   
                      class="stats-tab column is-2-tablet is-4-mobile has-text-centered">
                     <p class="stat-val">{{meetupsCount}}</p>
                     <p class="stat-key">Meetups</p>
-                </div>
-                <!-- TODO: Set Active Tab to 'threads' and class to 'isActive' -->
+                </div>                
                 <div @click="activeTab = 'threads'" 
                     :class="{isActive: activeTab === 'threads'}" 
                     class="stats-tab column is-2-tablet is-4-mobile has-text-centered">
                     <p class="stat-val">{{threadsCount}}</p>
                     <p class="stat-key">Threads</p>
-                </div>
-                <!-- TODO: Set Active Tab to 'posts' and class to 'isActive' -->
+                </div>                
                 <div @click="activeTab = 'posts'" 
                     :class="{isActive: activeTab === 'posts'}"
                     class="stats-tab column is-2-tablet is-4-mobile has-text-centered">
@@ -45,53 +39,45 @@
                     <p class="stat-key">Posts</p>
                 </div>
                 </div>
-            </div>
-            <!-- TODO: Display this div when activeTab === 'meetups' -->
-            <div v-if="activeTab === 'meetups'" class="columns is-mobile is-multiline">
-                <!-- TODO: Iterate over meetups -->
+            </div>            
+            <div v-if="activeTab === 'meetups'" class="columns is-mobile is-multiline">                
                 <div v-for="meetup in meetups" :key="meetup._id" class="column is-3-tablet is-6-mobile">
                 <!-- THREADS -->
                 <div class="card">
                     <div class="card-image">
-                    <figure class="image is-4by3">
-                        <!-- TODO: Display Meetup Image -->
+                    <figure class="image is-4by3">                       
                         <img :src="meetup.image"/>
                     </figure>
                     </div>
                     <div class="card-content">
                     <div class="media">
-                        <div class="media-content">
-                        <!-- TODO: Display Meetup title -->
-                        <p class="title is-4">{{meetup.title}}</p>
-                        <!-- TODO: Display Category name -->
-                        <p class="subtitle is-6"><span class="tag is-dark subtitle">{{meetup.category.name}}</span></p>
+                        <div class="media-content">                        
+                        <p class="title is-4">{{meetup.title}}</p>                        
+                        <p class="subtitle is-6"><span class="tag is-dark subtitle">{{meetup.category.name | capitalize}}</span></p>
                         </div>
                     </div>
-                    <div class="content">
-                        <!-- TODO: Display Meetup shortInfo -->
+                    <div class="content">                        
                         <p>
                         {{meetup.shortInfo}}
                         </p>
                     </div>
                     </div>
                     <footer class="card-footer">
-                    <a class="card-footer-item">Share</a>
-                    <a class="card-footer-item">Delete</a>
+                    <router-link :to="{name: 'PageMeetupEdit', params: {meetupId: meetup._id}}" class="card-footer-item">Edit</router-link>
+                    <a @click.prevent="($event) => showDeleteMeetupWarning($event, meetup._id)"
+                                       class="card-footer-item delete-item">Delete</a>
                     </footer>
                 </div>
                 <br/>
                 </div>
-            </div>
-            <!-- TODO: Display this div when activeTab === 'threads' -->
-            <div v-if="activeTab === 'threads'" class="columns is-mobile is-multiline">
-                <!-- TODO: Iterate over threads -->
+            </div>            
+            <div v-if="activeTab === 'threads'" class="columns is-mobile is-multiline">                
                 <div v-for="thread in threads" :key="thread._id" class="column is-3-tablet is-6-mobile">
                 <!-- THREADS -->
                 <div class="card">
                     <div class="card-content">
                     <div class="media">
-                        <div class="media-content">
-                        <!-- TODO: Display thread thread title -->
+                        <div class="media-content">                        
                         <p class="title is-4">{{thread.title}}</p>
                         </div>
                     </div>
@@ -103,17 +89,14 @@
                 </div>
                 <br/>
                 </div>
-            </div>
-            <!-- TODO: Display this div when activeTab === 'posts' -->
-            <div v-if="activeTab === 'posts'" class="columns is-mobile is-multiline">
-                <!-- TODO: Iterate over posts -->
+            </div>            
+            <div v-if="activeTab === 'posts'" class="columns is-mobile is-multiline">               
                 <div v-for="post in posts" :key="post._id" class="column is-3-tablet is-6-mobile">
                 <!-- THREADS -->
                 <div class="card">
                     <div class="card-content">
                     <div class="media">
-                        <div class="media-content">
-                        <!-- TODO: Display post text -->
+                        <div class="media-content">                        
                         <p class="title is-4">{{post.text}}</p>
                         </div>
                     </div>
@@ -169,6 +152,15 @@ export default {
             done()
           })
       },
+      showDeleteMeetupWarning(e, meetupId) {
+        e.stopPropagation()
+        const isConfirm = confirm('Are you sure you want to delete this meetup???')
+        if (isConfirm) {
+          this.$store.dispatch('meetups/deleteMeetup', meetupId)
+            .then(id => this.$store.dispatch('stats/updateStats', id))
+            .catch(err => console.log(err))
+        }
+      }
     }
 }
 </script>

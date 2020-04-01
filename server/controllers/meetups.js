@@ -100,13 +100,17 @@ exports.leaveMeetup = function (req, res) {
 };
 
 exports.updateMeetup = function (req, res) {
-  const meetupData = req.body;
-  const {id} = req.params;
+  const meetupData = req.body
+  const {id} = req.params
   const user = req.user;
+  meetupData.updatedAt = new Date();
 
   if (user.id === meetupData.meetupCreator._id) {
-    Meetup.findByIdAndUpdate(id, { $set: meetupData}, { new: true },
-    (errors, updatedMeetup) => {
+    Meetup.findByIdAndUpdate(id, { $set: meetupData}, { new: true })
+          .populate('meetupCreator', 'name id avatar')
+          .populate('category')
+          .exec((errors, updatedMeetup) => {
+
       if (errors) {
         return res.status(422).send({errors})
       }
@@ -114,6 +118,29 @@ exports.updateMeetup = function (req, res) {
       return res.json(updatedMeetup)
     })
   } else {
-    return res.status(401).send({errors: {message: 'Not Authorized!'}})
+    return res.status(401).send({errors: {message: 'Not Authorized!'}});
   }
 };
+
+exports.deleteMeetup = function(req, res) {
+  const {id} = req.params;
+  const user = req.user;
+
+  Meetup.findById(id, (errors, meetup) => {
+    if (errors) {
+      return res.status(422).send({errors})
+    }
+
+    if (meetup.meetupCreator != user.id) {
+      return res.status(401).send({errors: {message: 'Not Authorized!'}})
+    }
+
+    meetup.remove((errors, _) => {
+      if (errors) {
+        return res.status(422).send({errors})
+      }
+
+      return res.json(meetup._id);
+    })
+  })
+}
