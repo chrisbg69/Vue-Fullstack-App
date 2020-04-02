@@ -201,9 +201,19 @@
     font-size: 20px;
     font-weight: bold;
   }
+
+ .tag:not(body).is-large {
+    line-height: 3rem;
+  }
+
+  .tag:not(body).is-warning {
+    color: red;
+  }
+
   span {
     display:table;
     margin:0 auto;
+    
   }
 
 </style>
