@@ -92,9 +92,9 @@
             </form>
           </div>
           <p class="has-text-grey">
-            <router-link :to="{name: 'PageLogin'}">Login</router-link> &nbsp;·&nbsp;
-            <a>Sign Up With Google</a> &nbsp;·&nbsp;
-            <a href="../">Need Help?</a>
+            <a>Have an Acccount?</a> &nbsp;·&nbsp;
+            <router-link :to="{name: 'PageLogin'}">Login</router-link> &nbsp;·&nbsp;            
+            <router-link :to="'/'">Need Help?</router-link>
           </p>
         </div>
       </div>

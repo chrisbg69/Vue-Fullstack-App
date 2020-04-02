@@ -43,9 +43,9 @@
             </form>
           </div>
           <p class="has-text-grey">
-            <a>Sign In With Google</a> &nbsp;·&nbsp;
+            <a>Don't have an Acccount?</a> &nbsp;·&nbsp;
             <router-link :to="{name: 'PageRegister'}">Sign Up</router-link> &nbsp;·&nbsp;
-            <a href="../">Need Help?</a>
+            <router-link :to="'/'">Need Help?</router-link>
           </p>
         </div>
       </div>

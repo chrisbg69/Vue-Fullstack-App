@@ -112,8 +112,8 @@
                 </div>
               </div>
               <footer class="card-footer">
-                <a class="card-footer-item">Share</a>
-                <a class="card-footer-item">Delete</a>
+                <a class="card-footer-item">{{thread.updatedAt | formatDate}}</a>
+                <a class="card-footer-item">{{user.name}}</a>
               </footer>
             </div>
             <br/>
@@ -139,8 +139,8 @@
                 </div>
               </div>
               <footer class="card-footer">
-                <a class="card-footer-item">Share</a>
-                <a class="card-footer-item">Delete</a>
+                <a class="card-footer-item">{{post.updatedAt | formatDate}}</a>
+                <a class="card-footer-item">{{user.name}}</a>
               </footer>
             </div>
             <br/>
@@ -185,7 +185,7 @@
       updateUser ({user, done}) {
         this.$store.dispatch('auth/updateUser', user)
           .then(() => {
-            this.$toasted.success('Profile Successfuly Updated', {duration: 3000})
+            this.$toasted.success('Profile Successfuly Updated', {duration: 3000, position: "top-center"})
             done()
           })
           .catch(err => {
