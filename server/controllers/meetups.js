@@ -14,7 +14,7 @@ exports.getMeetups = function(req, res) {
   findQuery
         .populate('category')
         .populate('joinedPeople')
-        .limit(5)
+        .limit(9)
         .sort({'createdAt': -1})
         .exec((errors, meetups) => {
     if (errors) {

@@ -92,7 +92,7 @@
             </form>
           </div>
           <p class="has-text-grey">
-            <a>Have an Acccount?</a> &nbsp;·&nbsp;
+            <a>Have an Account?</a> &nbsp;·&nbsp;
             <router-link :to="{name: 'PageLogin'}">Login</router-link> &nbsp;·&nbsp;            
             <router-link :to="'/'">Need Help?</router-link>
           </p>

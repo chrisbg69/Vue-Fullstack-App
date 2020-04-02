@@ -43,7 +43,7 @@
             </form>
           </div>
           <p class="has-text-grey">
-            <a>Don't have an Acccount?</a> &nbsp;·&nbsp;
+            <a>Don't have an Account?</a> &nbsp;·&nbsp;
             <router-link :to="{name: 'PageRegister'}">Sign Up</router-link> &nbsp;·&nbsp;
             <router-link :to="'/'">Need Help?</router-link>
           </p>
