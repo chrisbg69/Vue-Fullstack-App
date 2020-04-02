@@ -93,7 +93,7 @@
           </div>
         </template>
         <div v-else class="stats-error">
-          No meetups currently created :(
+          No Meetups currently created :(
         </div>
       </div>
       <!-- TODO: Display this div when activeTab === 'threads' -->
@@ -147,7 +147,7 @@
           </div>
         </template>
         <div v-else class="stats-error">
-          No posts currently created :(
+          No Posts currently created :(
         </div>
       </div>
     </div>
@@ -215,7 +215,7 @@
     font-weight: bold;
     margin: 0 auto;
     display: block;
-    margin-top: 30px;
+    margin-top: 3rem;
     
     color: red;
   }

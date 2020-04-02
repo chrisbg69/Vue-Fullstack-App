@@ -6,7 +6,7 @@ import vuelidate from 'vuelidate';
 import Toasted from 'vue-toasted';
 import AppSocket from './plugins/socket';
 
-import AppDropdown from './components/shared/AppDropdown';
+
 import AppHero from './components/shared/AppHero';
 import AppSpinner from './components/shared/AppSpinner';
 
@@ -16,7 +16,7 @@ import moment from 'moment';
 Vue.config.productionTip = false;
 
 Vue.component('AppHero', AppHero);
-Vue.component('AppDropdown', AppDropdown);
+
 Vue.component('AppSpinner', AppSpinner);
 
 Vue.use(vuelidate);
