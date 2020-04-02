@@ -22,8 +22,7 @@
             </div>
             <div class="level-right">
               <div class="level-item">
-                <button class="button is-medium m-r-sm">Meetups</button>
-                <button class="button is-medium">Calendar</button>
+                <p class="find-text">Find Meetups</p>
               </div>
             </div>
           </div>
@@ -198,8 +197,13 @@
     bottom: -42px;
   }
 
+  .find-text {
+    font-size: 20px;
+    font-weight: bold;
+  }
   span {
     display:table;
     margin:0 auto;
   }
+
 </style>
