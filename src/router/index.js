@@ -45,7 +45,7 @@ const router = new Router({
           name: 'PageMeetupCreate',
           component: PageMeetupCreate,
           meta: {onlyAuthUser: true}            
-      },
+        },
         {
             path: '/meetups/secret',
             name: 'PageSecret',
