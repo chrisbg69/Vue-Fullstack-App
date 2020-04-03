@@ -2,7 +2,7 @@
   <nav class="navbar is-spaced" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <router-link :to="'/'" class="navbar-item" href="https://bulma.io">
-        <h1 class="title is-4">VueFullstackApp</h1>
+        <img src="../../assets/img/vue-logo.png">
       </router-link>
       <a
         role="button"
@@ -27,11 +27,9 @@
           <a class="navbar-link">More</a>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item">About</a>
-            <a class="navbar-item">Jobs</a>
-            <a class="navbar-item">Contact</a>
+            <a class="navbar-item">About</a> 
             <hr class="navbar-divider" />
-            <a class="navbar-item">Report an issue</a>
+            <router-link :to="'/contact'" class="navbar-item">Contact</router-link>
           </div>
         </div>
       </div>
@@ -81,4 +79,8 @@ export default {
 </script>
 
 <style scoped>
+.navbar-item img {
+    max-height: 3rem;
+    margin-bottom: 1rem;
+}
 </style>

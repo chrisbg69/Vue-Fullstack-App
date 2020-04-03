@@ -63,7 +63,7 @@ const router = new Router({
           component: PageMeetupEdit,
           meta: {onlyAuthUser: true},
           props: true
-        },
+        },        
         {
             path: '/login',
             name: 'PageLogin',
