@@ -9,11 +9,14 @@ export default {
 
     state: {
         items: [],
-        item: {}
-    },
-    getters: {
-         
-    },
+        item: {},
+        pagination: {
+            count: 0,
+            pageCount: 0,
+            pageSize: 3,
+            pageNum: 1
+          }
+    },    
     actions: {
         fetchMeetups ({state, commit}, options = {}) {
             if (options.reset) {
@@ -23,8 +26,9 @@ export default {
             
             return axios.get(url)
         .then(res => {
-          const meetups = res.data;
+            const { meetups, count, pageCount } = res.data;
           commit('setItems', {resource: 'meetups', items: meetups}, {root: true});
+          commit('setPagination', {count, pageCount})
           return state.items;
         });
         },
@@ -84,7 +88,11 @@ export default {
                 const meetupId = res.data
                 return meetupId;
               })
-        }
+        },
+        initializePagesFromQuery({commit}, {pageSize, pageNum}) {
+            commit('setPage', pageNum)
+            commit('setPageSize', pageSize)
+        }       
     },
     mutations: {
         addUsersToMeetup(state, joinedPeople) {
@@ -93,6 +101,16 @@ export default {
         },
         mergeMeetup (state, updatedMeetup) {
             state.item = {...state.item, ...updatedMeetup}
-        }
+        },
+        setPagination (state, {count, pageCount}) {
+            Vue.set(state.pagination, 'count', count)
+            Vue.set(state.pagination, 'pageCount', pageCount)
+          },
+          setPage (state, page) {
+            Vue.set(state.pagination, 'pageNum', page)
+          },
+          setPageSize (state, pageSize) {
+            Vue.set(state.pagination, 'pageSize', pageSize)
+          }
     }
 }

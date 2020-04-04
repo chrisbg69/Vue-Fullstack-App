@@ -12,6 +12,14 @@
       <div class="row columns is-multiline">              
        <MeetupItem v-for="meetup in meetups" :key="meetup._id" :meetup="meetup"/>
       </div>
+      <paginate
+        v-model="pagination.pageNum"
+        :page-count="pagination.pageCount"
+        :click-handler="fetchPaginatedMeetups"
+        :prev-text="'Prev'"
+        :next-text="'Next'"        
+        :container-class="'paginationContainer'">
+      </paginate>
       </section>
       <section class="section">
         <div>
@@ -49,12 +57,17 @@
       }),
       ...mapState({
         meetups: state => state.meetups.items,
-        categories: state => state.categories.items
+        categories: state => state.categories.items,
+        pagination: state => state.meetups.pagination
       })
     },
     created ()  {
-      Promise.all([this.fetchMeetups(), this.fetchCategories()])
-        
+      const {pageSize, pageNum} = this.$route.query
+      if (pageSize && pageNum) {
+        this.initializePagesFromQuery({pageSize, pageNum})
+      }
+
+      Promise.all([this.fetchMeetups(), this.fetchCategories()])        
         .then(() => this.pageLoader_resolveData())
         .catch((err) => {
           console.error(err)
@@ -63,12 +76,70 @@
             
     },
     methods: {
-      ...mapActions('meetups', ['fetchMeetups']),
+     ...mapActions('meetups', ['fetchMeetups', 'initializePagesFromQuery']),
       ...mapActions('categories', ['fetchCategories']),
+      handleFetchMeetups ({reset}) {
+        const filter = {}
+        filter['pageSize'] = this.pagination.pageSize
+        filter['pageNum'] = this.pagination.pageNum
+        // eslint-disable-next-line no-unused-vars
+        return this.fetchMeetups({filter, reset}).then(_ => this.setQueryPaginationParams())
+      },
+      fetchPaginatedMeetups (page) {
+        this.setPage(page)
+        this.handleFetchMeetups({reset: false})
+      },
+      setPage (page) {
+        this.$store.commit('meetups/setPage', page)
+      },
+      setQueryPaginationParams() {
+        const { pageSize, pageNum } = this.pagination
+        this.$router.push({query: {pageNum, pageSize}})
+      }
     }  
   }
 </script>
 
-<style scoped>
-  
+<style lang="scss">
+  .paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0;
+  margin: 20px 0;
+  border-radius: 4px;
+  > li {
+    display: inline;
+    font-size: 18px;
+    margin: 3px;
+    > a {
+      position: relative;
+      float: left;
+      padding: 6px 12px;
+      margin-left: -1px;
+      line-height: 1.42857143;
+      color: #00d1b2;
+      text-decoration: none;
+      background-color: #fff;
+      border: 1px solid #ddd;
+    }
+    &.active {
+      > a {
+        z-index: 2;
+        color: #fff;
+        cursor: default;
+        background-color: #00d1b2;
+        border-color: #00d1b2;
+      }
+    }
+    &.disabled {
+      > a {
+        color: #777;
+        cursor: not-allowed;
+        background-color: #fff;
+        border-color: #ddd;
+      }
+    }
+  }
+ }
 </style>

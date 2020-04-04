@@ -91,7 +91,7 @@
                 </div>
               </div>
               <div class="meetup-side-box-map">
-                <img src="https://cnet2.cbsistatic.com/img/H_zPLL8-QTZOLxJvgHQ1Jkz0EgY=/830x467/2013/07/10/f0bcef02-67c2-11e3-a665-14feb5ca9861/maps_routemap.png" class="venueMap-mapImg span--100" alt="Location image of meetup venue">
+                <img src="../assets/img/bg-map-1.png" class="venueMap-mapImg span--100" alt="Location image of meetup venue">
               </div>
             </aside>
           </div>
@@ -228,6 +228,7 @@ export default {
     border-radius: 10px;
     font-size: 16px;
     padding: 15px;
+    margin-bottom: 1em;
   }
 }
 pre,
@@ -273,5 +274,10 @@ background: linear-gradient(to top right, #524ad0 10%, #D099FA);
   background: inherit;
   margin: inherit;
 }
+
+.venueMap-mapImg {
+  border-radius: 5px;
+}
+
 .footer {background-color: white;}
 </style>

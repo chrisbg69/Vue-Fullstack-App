@@ -9,6 +9,7 @@ import AppSocket from './plugins/socket';
 
 import AppHero from './components/shared/AppHero';
 import AppSpinner from './components/shared/AppSpinner';
+import Paginate from 'vuejs-paginate';
 
 import moment from 'moment';
 
@@ -17,8 +18,8 @@ import moment from 'moment';
 Vue.config.productionTip = false;
 
 Vue.component('AppHero', AppHero);
-
 Vue.component('AppSpinner', AppSpinner);
+Vue.component('paginate', Paginate);
 
 Vue.use(vuelidate);
 Vue.use(Toasted);
