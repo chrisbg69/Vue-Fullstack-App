@@ -5,7 +5,7 @@
 
 # vue-fullstack-app
 
-This project is simple social network system for meetups, where users can signup and login. Guest users can view all meetups and search for them. Logged users can write, edit and delete own meetups. Also they can contact other users via threads and posts under published meetups.
+This project is a simple social network system for meetups, where users can signup and login. Guest users can view all meetups and search for them. Logged users can write, edit and delete own meetups. Also they can contact other users via threads and posts under published meetups.
 
 ## Development server
 
