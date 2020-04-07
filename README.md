@@ -5,25 +5,11 @@
 
 # vue-fullstack-app
 
-## Project setup
-```
-npm install
-```
+This project is simple social network system for meetups, where users can signup and login. Guest users can view all meetups and search for them. Logged users can write, edit and delete own meetups. Also they can contact other users via threads and posts under published meetups.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Development server
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Download or clone repository. Run `npm install` to install server and client dependencies.
+Run `npm run serve` for a dev server. Open second terminal and run `nodemon`. Navigate to `http://localhost:8080/` The app will automatically reload if you change any of the source files.
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

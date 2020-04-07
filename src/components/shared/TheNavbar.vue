@@ -23,7 +23,8 @@
 
         <router-link :to="'/find'" class="navbar-item">Find</router-link>
 
-        <div class="navbar-item has-dropdown is-hoverable">
+      
+        <!-- <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">More</a>
 
           <div class="navbar-dropdown">
@@ -31,7 +32,7 @@
             <hr class="navbar-divider" />
             <router-link :to="'/contact'" class="navbar-item">Contact</router-link>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
