@@ -12,4 +12,6 @@ This project is a simple social network system for meetups, where users can sign
 Download or clone repository. Run `npm install` to install server and client dependencies.
 Run `npm run serve` for a dev server. Open second terminal and run `cd server` to navigate to server folder. After that run `nodemon`. Navigate to `http://localhost:8080/` The app will automatically reload if you change any of the source files.
 
+## Live version of the app
 
+You can view live demo of the project on `Heroku` - [link to vue-fullstack-app](https://vue-meetups-app.herokuapp.com/)
