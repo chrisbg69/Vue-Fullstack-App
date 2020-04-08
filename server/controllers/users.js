@@ -32,6 +32,24 @@ exports.getCurrentUser = function (req, res, next) {
 exports.register = function (req, res) {
   const registerData = req.body;
 
+  if (!registerData.username) {
+    return res.status(422).json({
+      errors: {
+        username: 'is required',
+        message: 'Username is required!'
+      }
+    });
+  }
+
+  if (!registerData.name) {
+    return res.status(422).json({
+      errors: {
+        name: 'is required',
+        message: 'Name is required!'
+      }
+    });
+  }
+
   if (!registerData.email) {
     return res.status(422).json({
       errors: {

@@ -63,8 +63,7 @@
                  <div class="meetup-side-box-place m-b-sm">
                   <p><b>Choose Category</b></p>
                   <div class="field">
-                    <div class="select">
-                      <!-- TODO: Get Here Categories -->
+                    <div class="select">                      
                       <select v-model="meetup.category">
                         <option v-for="category of categories"
                                 :value="category"

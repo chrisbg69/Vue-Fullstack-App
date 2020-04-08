@@ -18,7 +18,8 @@
                          type="text"
                          placeholder="Username">
                    <div v-if="$v.form.username.$error" class="form-error">
-                    <span v-if="!$v.form.username.required" class="help is-danger">Username is required</span>                    
+                    <span v-if="!$v.form.username.required" class="help is-danger">Username is required</span>
+                    <span v-if="!$v.form.username.minLength" class="help is-danger">Username minimum length is 3 characters</span>                    
                   </div>       
                 </div>
               </div>
@@ -30,7 +31,8 @@
                          type="text"
                          placeholder="Name">
                    <div v-if="$v.form.name.$error" class="form-error">
-                    <span v-if="!$v.form.name.required" class="help is-danger">Name is required</span>                    
+                    <span v-if="!$v.form.name.required" class="help is-danger">Name is required</span>
+                    <span v-if="!$v.form.name.minLength" class="help is-danger">Name minimum length is 3 characters</span>                    
                   </div>       
                 </div>
               </div>
@@ -121,10 +123,12 @@
       validations: {
         form: {
           username: {
-            //required
+            required,
+            minLength: minLength(3)
           },
           name: {
-            //required
+            required,
+            minLength: minLength(3)
           },
           email: {
             required,
