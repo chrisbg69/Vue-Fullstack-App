@@ -74,6 +74,9 @@ export default {
         .then(() => {
           this.$router.push('/login')
         })
+        .then(() => {
+            this.$toasted.success('Logout Successful!', {duration: 3000, position: "top-center"})
+          })
     }
   }
 };
