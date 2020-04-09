@@ -20,19 +20,7 @@
     <div id="navbarBasicExample" class="navbar-menu is-active">
       <div class="navbar-start">
         <router-link :to="'/'" class="navbar-item">Home</router-link>
-
-        <router-link :to="'/find'" class="navbar-item">Find</router-link>
-
-      
-        <!-- <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">More</a>
-
-          <div class="navbar-dropdown">
-            <a class="navbar-item">About</a> 
-            <hr class="navbar-divider" />
-            <router-link :to="'/contact'" class="navbar-item">Contact</router-link>
-          </div>
-        </div> -->
+        <router-link :to="'/find'" class="navbar-item">Find</router-link>          
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
