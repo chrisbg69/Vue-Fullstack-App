@@ -4,80 +4,65 @@
       <div class="section profile-heading">
         <div class="columns is-mobile is-multiline">
           <div class="column is-2">
-            <figure class="image  header-icon user-profile-image">
-              <!-- TODO: Get user avatar here -->
+            <figure class="image  header-icon user-profile-image">              
               <img class="is-rounded" :src="user.avatar"/>
             </figure>
           </div>
           <div class="column is-4-tablet is-10-mobile name">
-            <p>
-              <!-- TODO: Display user name here -->
+            <p>             
               <span class="title is-bold">{{user.name}}</span>
               <br/>
               <!-- Here will be user update functionality -->
               <UserUpdateModal :authUser="user"
                                @userSubmitted="updateUser" />
               <br/>
-            </p>
-            <!-- TODO: User info Here if any -->
+            </p>            
             <p class="tagline">
               {{user.info}}
             </p>
-          </div>
-          <!-- TODO: Set activeTab variable to 'meetups' and class to 'isActive' when activeTab === 'meetups' -->
+          </div>          
           <div @click="activeTab = 'meetups'"
                :class="{isActive: activeTab === 'meetups'}"
-               class="stats-tab column is-2-tablet is-4-mobile has-text-centered">
-            <!-- TODO: Display Meetups count -->
+               class="stats-tab column is-2-tablet is-4-mobile has-text-centered">            
             <p class="stat-val">{{meetupsCount}}</p>
             <p class="stat-key">Meetups</p>
-          </div>
-
-          <!-- TODO: Set activeTab variable to 'threads' and class to 'isActive' when activeTab === 'threads' -->
+          </div>          
           <div @click="activeTab = 'threads'"
                :class="{isActive: activeTab === 'threads'}"
-               class="stats-tab column is-2-tablet is-4-mobile has-text-centered">
-            <!-- TODO: Display Threads count -->
+               class="stats-tab column is-2-tablet is-4-mobile has-text-centered">            
             <p class="stat-val">{{threadsCount}}</p>
             <p class="stat-key">Threads</p>
-          </div>
-
-          <!-- TODO: Set activeTab variable to 'posts' and class to 'isActive' when activeTab === 'posts' -->
+          </div>          
           <div @click="activeTab = 'posts'"
                :class="{isActive: activeTab === 'posts'}"
-               class="stats-tab column is-2-tablet is-4-mobile has-text-centered">
-            <!-- TODO: Display Posts count -->
+               class="stats-tab column is-2-tablet is-4-mobile has-text-centered">            
             <p class="stat-val">{{postsCount}}</p>
             <p class="stat-key">Posts</p>
           </div>
         </div>
-      </div>
-      <!-- TODO: Display this div when activeTab === 'meetups' -->
-      <div v-if="activeTab === 'meetups'" class="columns is-mobile is-multiline">
-        <!-- TODO: Iterate over meetups -->
+      </div>      
+      <div v-if="activeTab === 'meetups'" class="columns is-mobile is-multiline">        
         <template v-if="meetups && meetups.length > 0">
           <div v-for="meetup in meetups" :key="meetup._id" class="column is-3-tablet is-6-mobile">
             <!-- MEETUPS -->
             <div class="card">
               <div class="card-image">
-                <figure class="image is-4by3">
-                  <!-- TODO: Display Meetup Image -->
+                <figure class="image is-4by3">                  
                   <img :src="meetup.image"/>
                 </figure>
               </div>
               <div class="card-content">
                 <div class="media">
-                  <div class="media-content">
-                    <!-- TODO: Display Meetup title -->
+                  <div class="media-content">                   
                     <p class="title is-4">{{meetup.title}}</p>
-                    <!-- TODO: Display Category name -->
+                    <!-- Display Category name -->
                     <p class="subtitle is-6">
                       <span class="tag is-dark subtitle">{{meetup.category.name | capitalize}}</span>
                     </p>
                   </div>
                 </div>
                 <div class="content">
-                  <!-- TODO: Display Meetup shortInfo -->
+                  <!-- Display Meetup shortInfo -->
                   <p>
                     {{meetup.shortInfo}}
                   </p>
@@ -95,10 +80,9 @@
         <div v-else class="stats-error">
           No Meetups currently created :(
         </div>
-      </div>
-      <!-- TODO: Display this div when activeTab === 'threads' -->
+      </div>      
       <div v-if="activeTab === 'threads'" class="columns is-mobile is-multiline">
-        <!-- TODO: Iterate over threads -->
+        <!-- Iterate over threads -->
         <template v-if="threads && threads.length > 0">
           <div v-for="thread in threads" :key="thread._id" class="column is-3-tablet is-6-mobile">
           <!-- THREADS -->
@@ -106,7 +90,7 @@
               <div class="card-content">
                 <div class="media">
                   <div class="media-content">
-                    <!-- TODO: Display thread thread title -->
+                    <!-- Display thread thread title -->
                     <p class="title is-4">{{thread.title}}</p>
                   </div>
                 </div>
@@ -123,9 +107,9 @@
            No Threads currently created :(
         </div>
       </div>
-      <!-- TODO: Display this div when activeTab === 'posts' -->
+      <!-- Display this div when activeTab === 'posts' -->
       <div v-if="activeTab === 'posts'" class="columns is-mobile is-multiline">
-        <!-- TODO: Iterate over posts -->
+        <!-- Iterate over posts -->
         <template v-if="posts && posts.length > 0">
           <div v-for="post in posts" :key="post._id" class="column is-3-tablet is-6-mobile">
           <!-- POSTS -->
@@ -133,7 +117,7 @@
               <div class="card-content">
                 <div class="media">
                   <div class="media-content">
-                    <!-- TODO: Display post text -->
+                    <!-- Display post text -->
                     <p class="title is-4">{{post.text}}</p>
                   </div>
                 </div>
