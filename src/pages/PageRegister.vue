@@ -151,7 +151,10 @@
       register () {
         this.$v.form.$touch()
         this.$store.dispatch('auth/registerUser', this.form)
-          .then(() => this.$router.push('/login'))          
+          .then(() => this.$router.push('/login'))
+          .then(() => {
+            this.$toasted.success('Register Successful!', {duration: 3000, position: "top-center"})
+          })          
           .catch((errorMessage) => {
             this.$toasted.error(errorMessage, {duration: 5000, position: "top-center"})
           })
