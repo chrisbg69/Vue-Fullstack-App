@@ -59,12 +59,11 @@ export default {
   methods: {
     logout () {
       this.$store.dispatch('auth/logout')
-        .then(() => {
+        .then(() => {          
           this.$router.push('/login')
+          this.$toasted.success('Logout Successful!', {duration: 3000, position: "top-center"})
         })
-        .then(() => {
-            this.$toasted.success('Logout Successful!', {duration: 3000, position: "top-center"})
-          })
+        
     }
   }
 };
