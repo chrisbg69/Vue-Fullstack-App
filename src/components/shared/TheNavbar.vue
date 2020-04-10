@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar is-spaced" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <router-link :to="'/'" class="navbar-item" href="https://bulma.io">
+      <router-link :to="'/'" class="navbar-item" href="https://vue-meetups-app.herokuapp.com">
         <img src="../../assets/img/vue-logo.png">
       </router-link>
       <a
