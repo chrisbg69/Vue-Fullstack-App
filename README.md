@@ -7,6 +7,13 @@
 
 This project is a simple social network system for meetups, where users can signup and login. Guest users can view all meetups and search for them. Logged users can write, edit and delete own meetups. Also they can contact other users via threads and posts under published meetups.
 
+> This project are based on the following technologies:
+
+- [Vue.js](https://vuejs.org/) and [Vue Router](https://router.vuejs.org/) for frontend
+- [Vuex](https://vuex.vuejs.org/) for state management
+- [Express](http://expressjs.com/) and [Node](https://nodejs.org/en/) for the backend
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for the database
+
 ## Project setup
 
 Download or clone repository. Run `npm install` to install server and client dependencies.
